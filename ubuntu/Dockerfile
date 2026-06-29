@@ -11,4 +11,7 @@ RUN if [ -s /tmp/requirements.txt ]; then pip install --no-cache-dir -r /tmp/req
 
 USER vscode
 WORKDIR /home/vscode
+
+# Ensure no conflicting entrypoint; set default command to start ttyd
+ENTRYPOINT []
 CMD ["ttyd", "-W", "-p", "7681", "bash"]
