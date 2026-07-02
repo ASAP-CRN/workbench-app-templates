@@ -7,7 +7,7 @@ services:
       context: .
     restart: always
     volumes:
-      - .:/workspace:cached
+      - ${PWD}:/workspace:cached
       - work:/home/vscode/work
     user: vscode
     command: ["ttyd", "-W", "-p", "7681", "bash"]
