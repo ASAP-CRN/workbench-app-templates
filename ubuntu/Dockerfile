@@ -59,8 +59,8 @@ RUN python3 -m venv /opt/venv && \
 
 # Ensure vscode user exists and set working directory
 RUN useradd -m -s /bin/bash vscode || true
-USER vscode
-WORKDIR /workspace
+WORKDIR /home/vscode
+
 
 # Start ttyd as the container entrypoint
 CMD ["ttyd", "-W", "-p", "7681", "bash"]
