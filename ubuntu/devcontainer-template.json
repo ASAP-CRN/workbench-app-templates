@@ -2,7 +2,7 @@
   "id": "ubuntu-example",
   "version": "1.0.0",
   "name": "ubuntu-example",
-  "description": "Custom Workbench app: ubuntu-example (Image: mcr.microsoft.com/devcontainers/base:ubuntu, Port: 7681, User: vscode)",
+  "description": "Custom Workbench app: ubuntu",
   "options": {
     "cloud": {
       "type": "string",

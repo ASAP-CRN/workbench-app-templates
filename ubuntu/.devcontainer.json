@@ -1,5 +1,5 @@
 {
-  "name": "ubuntu-example",
+  "name": "ubuntu",
   "dockerComposeFile": "docker-compose.yaml",
   "service": "app",
   "shutdownAction": "none",
