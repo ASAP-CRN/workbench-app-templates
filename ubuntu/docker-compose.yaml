@@ -7,8 +7,7 @@ services:
       context: .
     restart: always
     volumes:
-      - .:/workspace:cached
-      - work:/home/vscode/work
+      - ./:/mycode:cached
     user: vscode
     command: ["ttyd", "-W", "-p", "7681", "bash"]
     # The port specified here will be forwarded and accessible from the

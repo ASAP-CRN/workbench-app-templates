@@ -3,20 +3,20 @@
   "dockerComposeFile": "docker-compose.yaml",
   "service": "app",
   "shutdownAction": "none",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/mycode",
   "postCreateCommand": [
-    "./startupscript/post-startup.sh",
+    "/mycode/startupscript/post-startup.sh",
     "vscode",
     "/home/vscode",
-    "${templateOption:cloud}",
-    "${templateOption:login}"
+    "gcp",
+    "true"
   ],
   "postStartCommand": [
-    "./startupscript/remount-on-restart.sh",
+    "/mycode/startupscript/remount-on-restart.sh",
     "vscode",
     "/home/vscode",
-    "${templateOption:cloud}",
-    "${templateOption:login}"
+    "gcp",
+    "true"
   ],
   "features": {
     "ghcr.io/devcontainers/features/java:1": {

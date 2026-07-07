@@ -3,6 +3,8 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH=/opt/venv/bin:$PATH
 
+
+
 # Prepare apt and enable universe
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -61,6 +63,10 @@ RUN python3 -m venv /opt/venv && \
 RUN useradd -m -s /bin/bash vscode || true
 WORKDIR /home/vscode
 
+RUN mkdir -p /workspace
+RUN mkdir -p /mycode
+COPY startupscript /mycode/startupscript
+RUN chmod +x /mycode/startupscript/*.sh
 
 # Start ttyd as the container entrypoint
 CMD ["ttyd", "-W", "-p", "7681", "bash"]
