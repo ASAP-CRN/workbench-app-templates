@@ -18,19 +18,14 @@ Verily Workbench supports custom apps through Dev Container-based configurations
 
 ```text
 asapcrn-workbench-app-devcontainers/
-├──  ubuntu-example/
-│       ├── Dockerfile
-│       ├── docker-compose.yaml
-│       ├── devcontainer-template.json
-│       ├── .devcontainer.json
-│       └── startupscript/
+├──  ubuntu/
 └── README.md
 ```
 
 
 ## Available Examples
 
-### Ubuntu Example App
+### Ubuntu App
 
 A minimal Ubuntu-based custom app that runs a browser-accessible terminal using `ttyd`.
 
