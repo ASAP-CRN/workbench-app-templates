@@ -34,7 +34,7 @@ A minimal Ubuntu-based custom app that runs a browser-accessible terminal using 
 To use one of the app examples:
 
 1. Fork this repository.
-2. Choose an app example under `src/`.
+2. Choose an app example
 3. Modify the app files as needed.
 4. Test the app locally.
 5. Push your changes to your fork.
