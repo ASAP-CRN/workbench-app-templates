@@ -33,31 +33,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends ttyd || \
     ) && \
     rm -rf /var/lib/apt/lists/*
 
-# Create a dedicated virtual environment and install Python packages into it
-RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/python -m pip install --upgrade pip setuptools wheel meson && \
-    /opt/venv/bin/pip install --no-cache-dir \
-      jupyterlab \
-      pandas \
-      "numpy<2" \
-      matplotlib \
-      seaborn \
-      pillow \
-      scanpy \
-      "scvi-tools>=0.20" \
-      "umap-learn>=0.5.5" \
-      "scikit-learn>=1.2" \
-      "numba>=0.57" \
-      "llvmlite>=0.40" \
-      python-igraph \
-      leidenalg \
-      scib-metrics \
-      ipywidgets \
-      mygene \
-      pynndescent \
-      "cell_type_mapper @ git+https://github.com/alleninstitute/cell_type_mapper.git@rc/v1.5.2" \
-      "abc_atlas_access[notebooks] @ git+https://github.com/alleninstitute/abc_atlas_access.git" && \
-    rm -rf /root/.cache/pip
+# Set up a virtual environment for Python and install required packages
+FROM python:3.11-slim
+
+# Install system build deps needed by scientific packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential git cmake gfortran \
+    libopenblas-dev liblapack-dev libssl-dev libffi-dev pkg-config \
+    libxml2-dev libxslt1-dev libjpeg-dev zlib1g-dev llvm clang \
+    && rm -rf /var/lib/apt/lists/*
+
+# create venv and upgrade pip
+RUN python3 -m venv /opt/venv \
+ && /opt/venv/bin/python -m pip install --upgrade pip setuptools wheel
+
+# Copy requirements and install
+COPY requirements.txt /tmp/requirements.txt
+RUN /opt/venv/bin/pip install --no-cache-dir --prefer-binary -r /tmp/requirements.txt
+
+ENV PATH="/opt/venv/bin:${PATH}"
+
 
 # Ensure vscode user exists and set working directory
 RUN useradd -m -s /bin/bash vscode || true

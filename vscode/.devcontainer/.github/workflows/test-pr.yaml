@@ -1,0 +1,208 @@
+name: "CI - Test Templates"
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          check_together: 'yes'
+        env:
+          SHELLCHECK_OPTS: -e SC1090 -e SC1091
+
+  detect-changes:
+    name: "Detect changes"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        common_filters:
+          -
+            - '.github/workflows/test-pr.yaml'
+            - 'startupscript/**'
+            - 'tests/common/**'
+        config:
+          - example: {}
+            jupyter-template: {}
+            r-analysis:
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+            r-analysis-aou:
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+                - 'src/aou-common/**'
+            vscode:
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+            vscode-docker:
+              filters:
+                - 'features/src/workbench-tools/**'
+            test-app-secrets:
+              filters:
+                - 'src/common/**'
+            workbench-jupyter:
+              template: custom-workbench-jupyter-template
+              maximize_build_space: true
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+                - 'src/jupyter-common/**'
+            jupyter-aou:
+              maximize_build_space: true
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+                - 'src/jupyter-common/**'
+                - 'src/aou-common/**'
+            nemo_jupyter:
+              maximize_build_space: true
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+            nemo_jupyter_aou:
+              maximize_build_space: true
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+                - 'src/aou-common/**'
+                - 'src/nemo_jupyter/**'
+            workbench-jupyter-with-llm:
+              maximize_build_space: true
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+                - 'features/src/llm-context/**'
+                - 'features/src/wb-mcp-server/**'
+                - 'features/src/gemini-cli/**'
+                - 'src/jupyter-common/**'
+            workbench-jupyter-parabricks:
+              maximize_build_space: true
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+            workbench-jupyter-parabricks-aou:
+              maximize_build_space: true
+              filters:
+                - 'features/src/workbench-tools/**'
+                - 'features/src/postgres-client/**'
+                - 'src/aou-common/**'
+                - 'src/workbench-jupyter-parabricks/**'
+            ubuntu-example: {}
+    outputs:
+      apps: ${{ steps.output.outputs.apps }}
+    steps:
+      - name: Build filters
+        id: build-filters
+        run: |
+          CONFIG='${{ toJson(matrix.config) }}'
+          COMMON='${{ toJson(matrix.common_filters) }}'
+
+          echo "filters<<EOF" >> $GITHUB_OUTPUT
+          jq -n \
+            --argjson config "$CONFIG" \
+            --argjson common "$COMMON" \
+            '[$config
+              | to_entries
+              | .[]
+              | .value as $v
+              | .value = $common
+              | .value += ["src/" + ($v.template // .key) + "/**"]
+              | .value += ["tests/" + ($v.template // .key) + ".sh"]
+              | .value += ($v.filters // [])
+            ] | from_entries' | yq -P >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          list-files: json
+          filters: ${{ steps.build-filters.outputs.filters }}
+      - name: Output changed templates as JSON object
+        id: output
+        run: |
+          CHANGED_TEMPLATES='${{ steps.filter.outputs.changes }}'
+          CONFIG='${{ toJson(matrix.config) }}'
+
+          # output to github output
+          echo "apps<<EOF" >> $GITHUB_OUTPUT
+          jq -n \
+              --argjson changed "$CHANGED_TEMPLATES" \
+              --argjson config "$CONFIG" \
+              '[$changed[] as $t
+                | $config[$t]
+                | select(. != null)
+                | {
+                    template: (.template // $t),
+                    maximize_build_space: (.maximize_build_space // false),
+                  }
+              ]' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+
+  test:
+    name: "Smoke test '${{ matrix.app.template }}'"
+    needs: [detect-changes]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if : ${{ needs.detect-changes.outputs.apps != '[]' }}
+    strategy:
+      matrix:
+        app: ${{ fromJSON(needs.detect-changes.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bats
+        run: sudo apt-get update && sudo apt-get install -y bats
+
+      # Free up disk space by removing unnecessary files, if needed
+      - name: Maximize build disk space
+        if: ${{ matrix.app.maximize_build_space }}
+        uses: easimon/maximize-build-space@v10
+        with:
+          # This is the amount of space left over, not allocated to the LVM
+          # volume. We already checked out the repo so we don't need much
+          root-reserve-mb: 512
+          build-mount-path: /mnt/build
+          remove-dotnet: true
+          remove-android: true
+          remove-haskell: true
+          remove-codeql: true
+          remove-docker-images: true
+
+      - name: Reconfigure docker and containerd to use new build space
+        if: ${{ matrix.app.maximize_build_space }}
+        run: |
+          sudo mkdir -p /mnt/build/docker
+          echo '{"data-root": "/mnt/build/docker"}' | sudo tee /etc/docker/daemon.json
+          sudo mkdir -p /mnt/build/containerd
+          sudo containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
+          sudo sed -i "s|root = '/var/lib/containerd'|root = '/mnt/build/containerd'|" /etc/containerd/config.toml
+
+      - name: Restart docker and containerd
+        if: ${{ matrix.app.maximize_build_space }}
+        run: |
+          sudo systemctl restart containerd
+          sudo systemctl restart docker
+
+      - name: Copy startup scripts
+        run: |
+          cp tests/common/vm-metadata.sh startupscript/gcp/
+          for dir in src/*/; do
+            if [[ -d "${dir}" ]]; then
+              cp -r startupscript "${dir}"
+            fi
+          done
+
+      - name: Build '${{ matrix.app.template }}'
+        run: tests/common/build.sh "${{ matrix.app.template }}"
+
+      - name: Test '${{ matrix.app.template }}'
+        run: tests/common/test.sh "${{ matrix.app.template }}"

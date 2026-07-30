@@ -1,0 +1,441 @@
+[2026-07-30T18:10:24.147Z] @devcontainers/cli 0.88.0. Node.js v24.18.0. darwin 25.5.0 arm64.
+[2026-07-30T18:10:24.147Z] Start: Run: docker buildx version
+[2026-07-30T18:10:24.193Z] Stop (46 ms): Run: docker buildx version
+[2026-07-30T18:10:24.193Z] github.com/docker/buildx v0.34.1-desktop.1 c79576280a671664e17eb68da98ec3136b614aed
+[2026-07-30T18:10:24.193Z] 
+[2026-07-30T18:10:24.193Z] Start: Run: docker -v
+[2026-07-30T18:10:24.202Z] Stop (9 ms): Run: docker -v
+[2026-07-30T18:10:24.202Z] Start: Run: docker version --format {{.Server.Version}}
+[2026-07-30T18:10:24.221Z] Stop (19 ms): Run: docker version --format {{.Server.Version}}
+[2026-07-30T18:10:24.221Z] 29.5.3
+[2026-07-30T18:10:24.221Z] 
+[2026-07-30T18:10:24.221Z] Start: Resolving Remote
+[2026-07-30T18:10:24.223Z] Start: Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode --filter label=devcontainer.config_file=/Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/.devcontainer.json
+[2026-07-30T18:10:24.239Z] Stop (16 ms): Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode --filter label=devcontainer.config_file=/Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/.devcontainer.json
+[2026-07-30T18:10:24.240Z] Start: Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode
+[2026-07-30T18:10:24.254Z] Stop (14 ms): Run: docker ps -q -a --filter label=devcontainer.local_folder=/Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode
+[2026-07-30T18:10:24.255Z] Start: Run: docker compose version --short
+[2026-07-30T18:10:24.286Z] Stop (31 ms): Run: docker compose version --short
+[2026-07-30T18:10:24.286Z] Docker Compose version: 5.1.4
+[2026-07-30T18:10:24.286Z] Start: Run: docker compose -f /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/docker-compose.yaml --profile * config
+[2026-07-30T18:10:24.321Z] Stop (35 ms): Run: docker compose -f /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/docker-compose.yaml --profile * config
+[2026-07-30T18:10:24.321Z] name: vscode
+services:
+  app:
+    build:
+      context: /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode
+      dockerfile: Dockerfile
+    cap_add:
+      - SYS_ADMIN
+    container_name: application-server
+    devices:
+      - source: /dev/fuse
+        target: /dev/fuse
+        permissions: rwm
+    environment:
+      DEFAULT_WORKSPACE: /config
+      SUDO_PASSWORD: pwd
+      USER: abc
+    networks:
+      app-network: null
+    ports:
+      - mode: ingress
+        target: 8443
+        published: "8443"
+        protocol: tcp
+    restart: always
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - type: bind
+        source: /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode
+        target: /workspace
+        bind: {}
+      - type: volume
+        source: work
+        target: /home/vscode
+        volume: {}
+networks:
+  app-network:
+    name: app-network
+    external: true
+volumes:
+  work:
+    name: vscode_work
+[2026-07-30T18:10:24.322Z] Start: Run: docker ps -q -a --filter label=com.docker.compose.project=vscode --filter label=com.docker.compose.service=app
+[2026-07-30T18:10:24.337Z] Stop (15 ms): Run: docker ps -q -a --filter label=com.docker.compose.project=vscode --filter label=com.docker.compose.service=app
+[2026-07-30T18:10:24.337Z] Start: Run: docker events --format {{json .}} --filter event=start
+[2026-07-30T18:10:24.338Z] PersistedPath=/var/folders/3f/zy5tlmnn2fd8vk9mgcc0mh000000gn/T/devcontainercli, ContainerHasLabels=false
+[2026-07-30T18:10:24.338Z] Start: Run: docker compose -f /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/docker-compose.yaml --profile * config
+[2026-07-30T18:10:24.375Z] Stop (37 ms): Run: docker compose -f /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/docker-compose.yaml --profile * config
+[2026-07-30T18:10:24.375Z] name: vscode
+services:
+  app:
+    build:
+      context: /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode
+      dockerfile: Dockerfile
+    cap_add:
+      - SYS_ADMIN
+    container_name: application-server
+    devices:
+      - source: /dev/fuse
+        target: /dev/fuse
+        permissions: rwm
+    environment:
+      DEFAULT_WORKSPACE: /config
+      SUDO_PASSWORD: pwd
+      USER: abc
+    networks:
+      app-network: null
+    ports:
+      - mode: ingress
+        target: 8443
+        published: "8443"
+        protocol: tcp
+    restart: always
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - type: bind
+        source: /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode
+        target: /workspace
+        bind: {}
+      - type: volume
+        source: work
+        target: /home/vscode
+        volume: {}
+networks:
+  app-network:
+    name: app-network
+    external: true
+volumes:
+  work:
+    name: vscode_work
+[2026-07-30T18:10:24.376Z] Start: Run: docker inspect --type image lscr.io/linuxserver/code-server@sha256:7e9523734c003b6336781942df7b48aa6936a9df6931c12a19a1f7ad7858eeba
+[2026-07-30T18:10:24.415Z] Stop (39 ms): Run: docker inspect --type image lscr.io/linuxserver/code-server@sha256:7e9523734c003b6336781942df7b48aa6936a9df6931c12a19a1f7ad7858eeba
+[2026-07-30T18:10:24.415Z] workspace root: /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode
+[2026-07-30T18:10:24.415Z] configPath: /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/.devcontainer.json
+[2026-07-30T18:10:24.416Z] --- Processing User Features ----
+[2026-07-30T18:10:24.416Z] [* user-provided] ghcr.io/devcontainers/features/java@sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a, ghcr.io/devcontainers/features/node@sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6, ghcr.io/devcontainers/features/aws-cli@sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef, ghcr.io/dhoeric/features/google-cloud-cli@sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f, ghcr.io/anthropics/devcontainer-features/claude-code@sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a, ../.devcontainer/features/src/gemini-cli, ../.devcontainer/features/src/workbench-tools, ../.devcontainer/features/src/postgres-client
+[2026-07-30T18:10:24.416Z] Resolving Feature dependencies for 'ghcr.io/devcontainers/features/java@sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a'...
+[2026-07-30T18:10:24.416Z] * Processing feature: ghcr.io/devcontainers/features/java@sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.416Z] > input: ghcr.io/devcontainers/features/java@sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.416Z] >
+[2026-07-30T18:10:24.416Z] > resource: ghcr.io/devcontainers/features/java
+[2026-07-30T18:10:24.416Z] > id: java
+[2026-07-30T18:10:24.416Z] > owner: devcontainers
+[2026-07-30T18:10:24.416Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.416Z] > registry: ghcr.io
+[2026-07-30T18:10:24.416Z] > path: devcontainers/features/java
+[2026-07-30T18:10:24.416Z] >
+[2026-07-30T18:10:24.416Z] > version: sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.416Z] > tag?: undefined
+[2026-07-30T18:10:24.416Z] > digest?: sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.416Z] manifest url: https://ghcr.io/v2/devcontainers/features/java/manifests/sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+(node:41663) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `Code Helper (Plugin) --trace-deprecation ...` to show where the warning was created)
+[2026-07-30T18:10:24.464Z] [httpOci] Attempting to authenticate via 'Bearer' auth.
+[2026-07-30T18:10:24.465Z] [httpOci] Invoking credsStore credential helper 'desktop'
+[2026-07-30T18:10:24.465Z] Start: Run: docker-credential-desktop get
+[2026-07-30T18:10:24.543Z] Stop (78 ms): Run: docker-credential-desktop get
+[2026-07-30T18:10:24.543Z] [httpOci] Failed to query for 'ghcr.io' credential from 'docker-credential-desktop': [object Object]
+[2026-07-30T18:10:24.543Z] [httpOci] No authentication credentials found for registry 'ghcr.io' via docker config or credential helper.
+[2026-07-30T18:10:24.543Z] [httpOci] No authentication credentials found for registry 'ghcr.io'. Accessing anonymously.
+[2026-07-30T18:10:24.543Z] [httpOci] Attempting to fetch bearer token from:  https://ghcr.io/token?service=ghcr.io&scope=repository:devcontainers/features/java:pull
+[2026-07-30T18:10:24.658Z] [httpOci] 200 on reattempt after auth: https://ghcr.io/v2/devcontainers/features/java/manifests/sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.658Z] > input: ghcr.io/devcontainers/features/java@sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.658Z] >
+[2026-07-30T18:10:24.658Z] > resource: ghcr.io/devcontainers/features/java
+[2026-07-30T18:10:24.658Z] > id: java
+[2026-07-30T18:10:24.658Z] > owner: devcontainers
+[2026-07-30T18:10:24.658Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.658Z] > registry: ghcr.io
+[2026-07-30T18:10:24.658Z] > path: devcontainers/features/java
+[2026-07-30T18:10:24.658Z] >
+[2026-07-30T18:10:24.658Z] > version: sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.658Z] > tag?: undefined
+[2026-07-30T18:10:24.658Z] > digest?: sha256:9663ce0219ff85786e87901ce5f0a59f488edd5f99b46015192cda48468b233a
+[2026-07-30T18:10:24.658Z] * Processing feature: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.658Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.658Z] >
+[2026-07-30T18:10:24.658Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.658Z] > id: common-utils
+[2026-07-30T18:10:24.658Z] > owner: devcontainers
+[2026-07-30T18:10:24.658Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.658Z] > registry: ghcr.io
+[2026-07-30T18:10:24.658Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:24.658Z] >
+[2026-07-30T18:10:24.658Z] > version: latest
+[2026-07-30T18:10:24.658Z] > tag?: latest
+[2026-07-30T18:10:24.658Z] > digest?: undefined
+[2026-07-30T18:10:24.658Z] manifest url: https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:24.658Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:24.743Z] [httpOci] 200 (Cached): https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:24.743Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.743Z] >
+[2026-07-30T18:10:24.743Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.743Z] > id: common-utils
+[2026-07-30T18:10:24.743Z] > owner: devcontainers
+[2026-07-30T18:10:24.743Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.743Z] > registry: ghcr.io
+[2026-07-30T18:10:24.743Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:24.743Z] >
+[2026-07-30T18:10:24.743Z] > version: latest
+[2026-07-30T18:10:24.743Z] > tag?: latest
+[2026-07-30T18:10:24.743Z] > digest?: undefined
+[2026-07-30T18:10:24.743Z] Resolving Feature dependencies for 'ghcr.io/devcontainers/features/node@sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6'...
+[2026-07-30T18:10:24.743Z] * Processing feature: ghcr.io/devcontainers/features/node@sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.743Z] > input: ghcr.io/devcontainers/features/node@sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.743Z] >
+[2026-07-30T18:10:24.743Z] > resource: ghcr.io/devcontainers/features/node
+[2026-07-30T18:10:24.743Z] > id: node
+[2026-07-30T18:10:24.743Z] > owner: devcontainers
+[2026-07-30T18:10:24.743Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.743Z] > registry: ghcr.io
+[2026-07-30T18:10:24.743Z] > path: devcontainers/features/node
+[2026-07-30T18:10:24.743Z] >
+[2026-07-30T18:10:24.743Z] > version: sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.743Z] > tag?: undefined
+[2026-07-30T18:10:24.743Z] > digest?: sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.743Z] manifest url: https://ghcr.io/v2/devcontainers/features/node/manifests/sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.743Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:24.801Z] [httpOci] 200 (Cached): https://ghcr.io/v2/devcontainers/features/node/manifests/sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.801Z] > input: ghcr.io/devcontainers/features/node@sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.801Z] >
+[2026-07-30T18:10:24.801Z] > resource: ghcr.io/devcontainers/features/node
+[2026-07-30T18:10:24.801Z] > id: node
+[2026-07-30T18:10:24.801Z] > owner: devcontainers
+[2026-07-30T18:10:24.801Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.801Z] > registry: ghcr.io
+[2026-07-30T18:10:24.801Z] > path: devcontainers/features/node
+[2026-07-30T18:10:24.801Z] >
+[2026-07-30T18:10:24.801Z] > version: sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.801Z] > tag?: undefined
+[2026-07-30T18:10:24.801Z] > digest?: sha256:8c0de46939b61958041700ee89e3493f3b2e4131a06dc46b4d9423427d06e5f6
+[2026-07-30T18:10:24.807Z] * Processing feature: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.807Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.807Z] >
+[2026-07-30T18:10:24.807Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.807Z] > id: common-utils
+[2026-07-30T18:10:24.807Z] > owner: devcontainers
+[2026-07-30T18:10:24.807Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.807Z] > registry: ghcr.io
+[2026-07-30T18:10:24.807Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:24.807Z] >
+[2026-07-30T18:10:24.807Z] > version: latest
+[2026-07-30T18:10:24.807Z] > tag?: latest
+[2026-07-30T18:10:24.807Z] > digest?: undefined
+[2026-07-30T18:10:24.807Z] manifest url: https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:24.807Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:24.898Z] [httpOci] 200 (Cached): https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:24.898Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.898Z] >
+[2026-07-30T18:10:24.898Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.898Z] > id: common-utils
+[2026-07-30T18:10:24.898Z] > owner: devcontainers
+[2026-07-30T18:10:24.898Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.898Z] > registry: ghcr.io
+[2026-07-30T18:10:24.898Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:24.898Z] >
+[2026-07-30T18:10:24.898Z] > version: latest
+[2026-07-30T18:10:24.898Z] > tag?: latest
+[2026-07-30T18:10:24.898Z] > digest?: undefined
+[2026-07-30T18:10:24.898Z] Resolving Feature dependencies for 'ghcr.io/devcontainers/features/aws-cli@sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef'...
+[2026-07-30T18:10:24.898Z] * Processing feature: ghcr.io/devcontainers/features/aws-cli@sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.898Z] > input: ghcr.io/devcontainers/features/aws-cli@sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.898Z] >
+[2026-07-30T18:10:24.898Z] > resource: ghcr.io/devcontainers/features/aws-cli
+[2026-07-30T18:10:24.898Z] > id: aws-cli
+[2026-07-30T18:10:24.898Z] > owner: devcontainers
+[2026-07-30T18:10:24.898Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.898Z] > registry: ghcr.io
+[2026-07-30T18:10:24.898Z] > path: devcontainers/features/aws-cli
+[2026-07-30T18:10:24.898Z] >
+[2026-07-30T18:10:24.898Z] > version: sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.898Z] > tag?: undefined
+[2026-07-30T18:10:24.898Z] > digest?: sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.898Z] manifest url: https://ghcr.io/v2/devcontainers/features/aws-cli/manifests/sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.898Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:24.962Z] [httpOci] 200 (Cached): https://ghcr.io/v2/devcontainers/features/aws-cli/manifests/sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.962Z] > input: ghcr.io/devcontainers/features/aws-cli@sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.962Z] >
+[2026-07-30T18:10:24.962Z] > resource: ghcr.io/devcontainers/features/aws-cli
+[2026-07-30T18:10:24.962Z] > id: aws-cli
+[2026-07-30T18:10:24.962Z] > owner: devcontainers
+[2026-07-30T18:10:24.962Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.962Z] > registry: ghcr.io
+[2026-07-30T18:10:24.962Z] > path: devcontainers/features/aws-cli
+[2026-07-30T18:10:24.962Z] >
+[2026-07-30T18:10:24.962Z] > version: sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.962Z] > tag?: undefined
+[2026-07-30T18:10:24.962Z] > digest?: sha256:1f93c8315b7a6d76982ebb2269f8b0d50413fc0f965c032edf4aee0caceb73ef
+[2026-07-30T18:10:24.962Z] * Processing feature: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.962Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.962Z] >
+[2026-07-30T18:10:24.962Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:24.962Z] > id: common-utils
+[2026-07-30T18:10:24.962Z] > owner: devcontainers
+[2026-07-30T18:10:24.962Z] > namespace: devcontainers/features
+[2026-07-30T18:10:24.962Z] > registry: ghcr.io
+[2026-07-30T18:10:24.962Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:24.962Z] >
+[2026-07-30T18:10:24.962Z] > version: latest
+[2026-07-30T18:10:24.962Z] > tag?: latest
+[2026-07-30T18:10:24.962Z] > digest?: undefined
+[2026-07-30T18:10:24.962Z] manifest url: https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:24.962Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:25.049Z] [httpOci] 200 (Cached): https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:25.049Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:25.049Z] >
+[2026-07-30T18:10:25.049Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:25.049Z] > id: common-utils
+[2026-07-30T18:10:25.049Z] > owner: devcontainers
+[2026-07-30T18:10:25.049Z] > namespace: devcontainers/features
+[2026-07-30T18:10:25.049Z] > registry: ghcr.io
+[2026-07-30T18:10:25.049Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:25.049Z] >
+[2026-07-30T18:10:25.049Z] > version: latest
+[2026-07-30T18:10:25.049Z] > tag?: latest
+[2026-07-30T18:10:25.049Z] > digest?: undefined
+[2026-07-30T18:10:25.049Z] Resolving Feature dependencies for 'ghcr.io/dhoeric/features/google-cloud-cli@sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f'...
+[2026-07-30T18:10:25.049Z] * Processing feature: ghcr.io/dhoeric/features/google-cloud-cli@sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.049Z] > input: ghcr.io/dhoeric/features/google-cloud-cli@sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.049Z] >
+[2026-07-30T18:10:25.049Z] > resource: ghcr.io/dhoeric/features/google-cloud-cli
+[2026-07-30T18:10:25.049Z] > id: google-cloud-cli
+[2026-07-30T18:10:25.049Z] > owner: dhoeric
+[2026-07-30T18:10:25.049Z] > namespace: dhoeric/features
+[2026-07-30T18:10:25.049Z] > registry: ghcr.io
+[2026-07-30T18:10:25.049Z] > path: dhoeric/features/google-cloud-cli
+[2026-07-30T18:10:25.049Z] >
+[2026-07-30T18:10:25.049Z] > version: sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.049Z] > tag?: undefined
+[2026-07-30T18:10:25.049Z] > digest?: sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.049Z] manifest url: https://ghcr.io/v2/dhoeric/features/google-cloud-cli/manifests/sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.049Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:25.136Z] [httpOci] 200 (Cached): https://ghcr.io/v2/dhoeric/features/google-cloud-cli/manifests/sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.136Z] > input: ghcr.io/dhoeric/features/google-cloud-cli@sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.136Z] >
+[2026-07-30T18:10:25.136Z] > resource: ghcr.io/dhoeric/features/google-cloud-cli
+[2026-07-30T18:10:25.136Z] > id: google-cloud-cli
+[2026-07-30T18:10:25.136Z] > owner: dhoeric
+[2026-07-30T18:10:25.136Z] > namespace: dhoeric/features
+[2026-07-30T18:10:25.136Z] > registry: ghcr.io
+[2026-07-30T18:10:25.136Z] > path: dhoeric/features/google-cloud-cli
+[2026-07-30T18:10:25.136Z] >
+[2026-07-30T18:10:25.136Z] > version: sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.136Z] > tag?: undefined
+[2026-07-30T18:10:25.136Z] > digest?: sha256:fa5d894718825c5ad8009ac8f2c9f0cea3d1661eb108a9d465cba9f3fc48965f
+[2026-07-30T18:10:25.136Z] blob url: https://ghcr.io/v2/dhoeric/features/google-cloud-cli/blobs/sha256:8790b5b3d268f958b47652e0b378ed8d1a083f8ab46adf46d6585fae0a394d25
+[2026-07-30T18:10:25.136Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:25.268Z] [httpOci] 200 (Cached): https://ghcr.io/v2/dhoeric/features/google-cloud-cli/blobs/sha256:8790b5b3d268f958b47652e0b378ed8d1a083f8ab46adf46d6585fae0a394d25
+[2026-07-30T18:10:25.269Z] omitDuringExtraction: '
+[2026-07-30T18:10:25.269Z] Files to omit: ''
+[2026-07-30T18:10:25.270Z] Testing './'(Directory)
+[2026-07-30T18:10:25.270Z] Testing './README.md'(File)
+[2026-07-30T18:10:25.271Z] Testing './devcontainer-feature.json'(File)
+[2026-07-30T18:10:25.271Z] Testing './install.sh'(File)
+[2026-07-30T18:10:25.272Z] Files extracted from blob: ./README.md, ./devcontainer-feature.json, ./install.sh
+[2026-07-30T18:10:25.272Z] Found metadata file 'devcontainer-feature.json' in blob
+[2026-07-30T18:10:25.272Z] * Processing feature: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:25.272Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:25.272Z] >
+[2026-07-30T18:10:25.272Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:25.272Z] > id: common-utils
+[2026-07-30T18:10:25.272Z] > owner: devcontainers
+[2026-07-30T18:10:25.272Z] > namespace: devcontainers/features
+[2026-07-30T18:10:25.272Z] > registry: ghcr.io
+[2026-07-30T18:10:25.272Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:25.272Z] >
+[2026-07-30T18:10:25.272Z] > version: latest
+[2026-07-30T18:10:25.272Z] > tag?: latest
+[2026-07-30T18:10:25.272Z] > digest?: undefined
+[2026-07-30T18:10:25.272Z] manifest url: https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:25.272Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:25.376Z] [httpOci] 200 (Cached): https://ghcr.io/v2/devcontainers/features/common-utils/manifests/latest
+[2026-07-30T18:10:25.376Z] > input: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:25.376Z] >
+[2026-07-30T18:10:25.376Z] > resource: ghcr.io/devcontainers/features/common-utils
+[2026-07-30T18:10:25.376Z] > id: common-utils
+[2026-07-30T18:10:25.376Z] > owner: devcontainers
+[2026-07-30T18:10:25.376Z] > namespace: devcontainers/features
+[2026-07-30T18:10:25.376Z] > registry: ghcr.io
+[2026-07-30T18:10:25.376Z] > path: devcontainers/features/common-utils
+[2026-07-30T18:10:25.376Z] >
+[2026-07-30T18:10:25.376Z] > version: latest
+[2026-07-30T18:10:25.376Z] > tag?: latest
+[2026-07-30T18:10:25.376Z] > digest?: undefined
+[2026-07-30T18:10:25.376Z] Resolving Feature dependencies for 'ghcr.io/anthropics/devcontainer-features/claude-code@sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a'...
+[2026-07-30T18:10:25.376Z] * Processing feature: ghcr.io/anthropics/devcontainer-features/claude-code@sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.376Z] > input: ghcr.io/anthropics/devcontainer-features/claude-code@sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.376Z] >
+[2026-07-30T18:10:25.376Z] > resource: ghcr.io/anthropics/devcontainer-features/claude-code
+[2026-07-30T18:10:25.376Z] > id: claude-code
+[2026-07-30T18:10:25.376Z] > owner: anthropics
+[2026-07-30T18:10:25.376Z] > namespace: anthropics/devcontainer-features
+[2026-07-30T18:10:25.376Z] > registry: ghcr.io
+[2026-07-30T18:10:25.376Z] > path: anthropics/devcontainer-features/claude-code
+[2026-07-30T18:10:25.376Z] >
+[2026-07-30T18:10:25.376Z] > version: sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.376Z] > tag?: undefined
+[2026-07-30T18:10:25.376Z] > digest?: sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.376Z] manifest url: https://ghcr.io/v2/anthropics/devcontainer-features/claude-code/manifests/sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.376Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:25.433Z] [httpOci] 200 (Cached): https://ghcr.io/v2/anthropics/devcontainer-features/claude-code/manifests/sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.433Z] > input: ghcr.io/anthropics/devcontainer-features/claude-code@sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.433Z] >
+[2026-07-30T18:10:25.433Z] > resource: ghcr.io/anthropics/devcontainer-features/claude-code
+[2026-07-30T18:10:25.433Z] > id: claude-code
+[2026-07-30T18:10:25.433Z] > owner: anthropics
+[2026-07-30T18:10:25.433Z] > namespace: anthropics/devcontainer-features
+[2026-07-30T18:10:25.433Z] > registry: ghcr.io
+[2026-07-30T18:10:25.433Z] > path: anthropics/devcontainer-features/claude-code
+[2026-07-30T18:10:25.433Z] >
+[2026-07-30T18:10:25.433Z] > version: sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.433Z] > tag?: undefined
+[2026-07-30T18:10:25.433Z] > digest?: sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a
+[2026-07-30T18:10:25.433Z] * Processing feature: ghcr.io/devcontainers/features/node
+[2026-07-30T18:10:25.433Z] > input: ghcr.io/devcontainers/features/node
+[2026-07-30T18:10:25.433Z] >
+[2026-07-30T18:10:25.433Z] > resource: ghcr.io/devcontainers/features/node
+[2026-07-30T18:10:25.433Z] > id: node
+[2026-07-30T18:10:25.433Z] > owner: devcontainers
+[2026-07-30T18:10:25.433Z] > namespace: devcontainers/features
+[2026-07-30T18:10:25.433Z] > registry: ghcr.io
+[2026-07-30T18:10:25.433Z] > path: devcontainers/features/node
+[2026-07-30T18:10:25.433Z] >
+[2026-07-30T18:10:25.433Z] > version: latest
+[2026-07-30T18:10:25.433Z] > tag?: latest
+[2026-07-30T18:10:25.433Z] > digest?: undefined
+[2026-07-30T18:10:25.433Z] manifest url: https://ghcr.io/v2/devcontainers/features/node/manifests/latest
+[2026-07-30T18:10:25.433Z] [httpOci] Applying cachedAuthHeader for registry ghcr.io...
+[2026-07-30T18:10:25.514Z] [httpOci] 200 (Cached): https://ghcr.io/v2/devcontainers/features/node/manifests/latest
+[2026-07-30T18:10:25.514Z] > input: ghcr.io/devcontainers/features/node
+[2026-07-30T18:10:25.514Z] >
+[2026-07-30T18:10:25.514Z] > resource: ghcr.io/devcontainers/features/node
+[2026-07-30T18:10:25.514Z] > id: node
+[2026-07-30T18:10:25.514Z] > owner: devcontainers
+[2026-07-30T18:10:25.514Z] > namespace: devcontainers/features
+[2026-07-30T18:10:25.514Z] > registry: ghcr.io
+[2026-07-30T18:10:25.514Z] > path: devcontainers/features/node
+[2026-07-30T18:10:25.514Z] >
+[2026-07-30T18:10:25.514Z] > version: latest
+[2026-07-30T18:10:25.514Z] > tag?: latest
+[2026-07-30T18:10:25.514Z] > digest?: undefined
+[2026-07-30T18:10:25.514Z] Resolving Feature dependencies for '../.devcontainer/features/src/gemini-cli'...
+[2026-07-30T18:10:25.514Z] * Processing feature: ../.devcontainer/features/src/gemini-cli
+[2026-07-30T18:10:25.514Z] Local disk feature.
+[2026-07-30T18:10:25.514Z] /Users/amaraalexander/Documents/GitHub/workbench-app-templates/vscode/.devcontainer -> /Users/amaraalexander/Documents/GitHub/workbench-app-templates/.devcontainer/features/src/gemini-cli:   Relative Distance = '../../.devcontainer/features/src/gemini-cli'
+[2026-07-30T18:10:25.514Z] Local file path parse error. Resolved path must be a child of the .devcontainer/ folder.  Parsed: /Users/amaraalexander/Documents/GitHub/workbench-app-templates/.devcontainer/features/src/gemini-cli
+Error: ERR: Feature '../.devcontainer/features/src/gemini-cli' could not be processed.  You may not have permission to access this Feature, or may not be logged in.  If the issue persists, report this to the Feature author.
+    at IV (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:287:4753)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async mI (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:287:7321)
+    at async NQ (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:287:7547)
+    at async JQ (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:392:1834)
+    at async NI (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:395:2321)
+    at async Sp (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:412:5817)
+    at async t9 (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:432:2475)
+    at async e9 (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:412:3936)
+    at async M9 (/Users/amaraalexander/.vscode/extensions/ms-vscode-remote.remote-containers-0.466.0/dist/spec-node/devContainersSpecCLI.js:486:4822)
+{"outcome":"error","message":"ERR: Feature '../.devcontainer/features/src/gemini-cli' could not be processed.  You may not have permission to access this Feature, or may not be logged in.  If the issue persists, report this to the Feature author.","description":"An error occurred setting up the container."}
