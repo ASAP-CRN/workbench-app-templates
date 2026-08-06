@@ -33,9 +33,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends ttyd || \
     ) && \
     rm -rf /var/lib/apt/lists/*
 
-# Set up a virtual environment for Python and install required packages
-FROM python:3.11-slim
-
 # Install system build deps needed by scientific packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential git cmake gfortran \
