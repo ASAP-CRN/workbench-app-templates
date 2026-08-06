@@ -48,8 +48,8 @@ asapcrn-workbench-app-devcontainers/
 
 Each app template lives in its own folder. Start with the app-specific `README.md` for setup, customization, local testing, and launch instructions.
 
-!!! note
-The `ubuntu/` and `vscode/` templates are independent examples. Changes made to one template do not automatically apply to the other.
+> Note:
+> The `ubuntu/` and `vscode/` templates are independent examples. Changes made to one template do not automatically apply to the other.
 
 ## Available Templates
 
