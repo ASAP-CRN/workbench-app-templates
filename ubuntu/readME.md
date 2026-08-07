@@ -140,4 +140,4 @@ Once launched, the app opens a browser-based terminal.
 
 This Ubuntu example app provides a lightweight starting point for building command-line-friendly custom apps in Verily Workbench. It can be used as-is for shell-based workflows or extended with additional packages, tools, and startup behavior for more specialized research environments.
 
-_Note: This template was edited from the [verily-src Github Repo](https://github.com/verily-src/workbench-app-devcontainers/blob/main/src/vscode/).
+_Note: This template was edited from the [verily-src Github](https://github.com/verily-src/workbench-app-devcontainers).
