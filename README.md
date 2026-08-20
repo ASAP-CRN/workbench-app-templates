@@ -51,7 +51,10 @@ Each app template lives in its own folder. Start with the app-specific `README.m
 > Note:
 > The `ubuntu/` and `vscode/` templates are independent examples. Changes made to one template do not automatically apply to the other.
 
+
 ## Available Templates
+> Warning:
+> App startup can take 10-30+ minutes! 
 
 ### Ubuntu App
 
