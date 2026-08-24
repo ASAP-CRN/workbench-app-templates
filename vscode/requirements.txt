@@ -1,6 +1,4 @@
 # Python version is managed by the base image; keep this here for reference
-# python==3.10
-
 jupyterlab
 pandas
 numpy<2
@@ -8,7 +6,6 @@ matplotlib
 seaborn
 pillow
 scanpy
-scvi-tools>=0.20
 umap-learn>=0.5.5
 scikit-learn>=1.2
 numba>=0.57

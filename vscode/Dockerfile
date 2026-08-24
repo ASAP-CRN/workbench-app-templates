@@ -50,6 +50,9 @@ RUN python3 -m venv /opt/venv \
 COPY requirements.txt /tmp/requirements.txt
 
 RUN /opt/venv/bin/pip install --no-cache-dir --prefer-binary -r /tmp/requirements.txt \
+    && /opt/venv/bin/python -m ipykernel install \
+         --name verily-venv \
+         --display-name "Python (verily-venv)" \
     && rm -rf /root/.cache/pip /tmp/requirements.txt \
     && chown -R abc:abc /opt/venv
 
