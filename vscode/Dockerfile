@@ -1,18 +1,13 @@
 FROM lscr.io/linuxserver/code-server@sha256:7e9523734c003b6336781942df7b48aa6936a9df6931c12a19a1f7ad7858eeba
 
-USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends jq \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /config/extensions \
+    && chown abc:abc /config /config/extensions
 
-# Create expected folders
-RUN mkdir -p /config/extensions \
-    /config/data/User \
-    /workspace \
-    /mycode \
-    && chown -R abc:abc /config /workspace /mycode
-
-ENV HOME=/config
-
-# Install code-server extensions as the abc user
 USER abc
+ENV HOME=/config
 
 RUN curl -fsSL 'https://open-vsx.org/api/Google/geminicodeassist/2.79.0' \
         | jq -r '.files.download' \
@@ -24,5 +19,7 @@ RUN curl -fsSL 'https://open-vsx.org/api/Google/geminicodeassist/2.79.0' \
     && /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension /tmp/claudecode.vsix \
     && rm /tmp/geminicodeassist.vsix /tmp/claudecode.vsix \
     && echo '{"http.systemCertificatesNode":true}' > /config/data/User/settings.json
+
+USER root
 
 WORKDIR /config
