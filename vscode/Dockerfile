@@ -1,5 +1,7 @@
-FROM lscr.io/linuxserver/code-server@sha256:7e9523734c003b6336781942df7b48aa6936a9df6931c12a19a1f7ad7858eeba
+FROM lscr.io/linuxserver/code-server@sha256:48dab910e89899bcdca334e18c96d44b1e7798affd9325196087ef35aba4946e
 
+# Gemini: https://open-vsx.org/extension/Google/geminicodeassist
+# Claude: https://open-vsx.org/extension/Anthropic/claude-code
 RUN apt-get update \
     && apt-get install -y --no-install-recommends jq \
     && rm -rf /var/lib/apt/lists/* \
@@ -18,6 +20,7 @@ RUN curl -fsSL 'https://open-vsx.org/api/Google/geminicodeassist/2.79.0' \
     && /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension /tmp/geminicodeassist.vsix \
     && /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension /tmp/claudecode.vsix \
     && rm /tmp/geminicodeassist.vsix /tmp/claudecode.vsix \
+    && mkdir -p /config/data/User \
     && echo '{"http.systemCertificatesNode":true}' > /config/data/User/settings.json
 
 USER root
